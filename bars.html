@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>D3 Practice</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+  </head>
+  
+<body>
+  <h2>Fun with Data Viz: Creating shapes.</h2>
+  <p>This is a paragraph with some text.</p>
+ 
+  <script>
+
+  var dataArray = [20, 40, 50];
+
+  var canvas = d3.select("body")
+                .append("svg")
+                .attr("width", 500)
+                .attr("height", 500);
+
+// the following is very confusing: 
+// several steps that are new
+// creating a simple bar chart:
+// width (d) - where d is randomly assigned, could be x, etc. 
+// d will take all the value of the dataArray
+// function (d,i) first arg contains data, second contains index of each data pt.
+
+  var bars = canvas.selectAll("rect")
+                .data(dataArray) // 1. bind data to empty selection
+                .enter() // 2. returns placeholders each data pt/element not in DOM
+                  .append("rect")   // a new bar for each data element
+                  .attr("width", function(d) { return d * 10 }) 
+                  .attr("height", 50)
+                  .attr("fill", "blue")
+                  .attr("y", function(d, i) { return i * 100 }); 
+
+
+
+</script>
+
+
+
+</body>
+</html> 
+
+
+
+
+
+
