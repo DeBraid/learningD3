@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>D3: transitions</title>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+
+<body>
+
+<script>
+  var width = 500
+  var height = 500
+  
+  var canvas = d3.select("body")
+                  .append("svg")
+                  .attr(width)
+                  .attr(height);
+
+  var circle = canvas.append("circle")
+                  .attr("cx", 50)
+                  .attr("cy", 50)
+                  .attr("r", 25);
+
+  circle.transition()
+      .duration(1000)
+      .delay(1000)
+      .attr("cx", 150)
+      .transition()
+      .attr("cy", 200)
+      .each("end", function(){
+        d3.select(this)
+          .attr("fill", "red")
+          .attr("stroke", "black");
+      });
+
+
+
+</script>
+</body>
+</html>
