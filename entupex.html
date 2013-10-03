@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>D3 Practice</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+  </head>
+  
+<body>
+  <h2>Fun with Data Viz: Transformations</h2>
+  <h4>Enter, Update, Exit:</h4>
+ 
+  <script>
+
+  var data = [10, 20];
+
+  var canvas = d3.select("body")
+              .append("svg")
+              .attr("width", 500)
+              .attr("height", 500)
+
+/* Key 1:
+  A. add a circle manually, not based on data by removing .data(data)
+  this creates object via .enter (think placeholer when # of DOM > data)
+  central point to this tutorial: add '20' to var data (above) 
+  then add circle2.  Suddenly we have 2 DOM elements (circle1 + circle2)
+  and 2 data points (var data = [10,20], not [10]).  
+  results in .enter now useless. 
+*/
+
+  var circle1 = canvas.append("circle") 
+                .attr("cx", 50)
+                .attr("cy", 100)
+                .attr("r", 25);              
+
+  var circle2 = canvas.append("circle") 
+                .attr("cx", 50)
+                .attr("cy", 200)
+                .attr("r", 25);              
+
+
+  var circles = canvas.selectAll("circle")
+              .data(data)
+              .attr("fill", "red")
+              .enter() // when DOM > data this is fired.
+                  .append("circle")
+                  .attr("fill", "green")
+                  .attr("cx", 50)
+                  .attr("cy", 50)
+                  .attr("r", 25);              
+
+</script>
+
+
+
+</body>
+</html> 
+
+
+
+
+
+
+
+
+
+
+
+
