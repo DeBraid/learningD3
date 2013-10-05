@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sankey Diagram with d3js</title>
+</head>
+<style type="text/css">
+  .node rect {
+    cursor: move;
+    fill-opacity: .9;
+    shape-rendering: crispEdges;
+  }
+
+  .node text {
+    pointer-events: none;
+    text-shadow: 0 1px 0 #fff;
+  }
+
+  .link {
+    fill: none;
+    stroke: #000;
+    stroke-opacity: .2;
+  }
+
+  .link:hover {
+    stroke-opacity: .5;
+  }
+
+</style>>
+
+<body>
+<p id="chart">
+<script type="text/javascript" src"http://d3js.org/d3.v3.min.js"></script>
+<script src"js/sankey.js"></script>
+
+<script>
+
+var units = "Widgets";
+
+var margin = {top: 10, right: 10, bottom: 10, left: 10},
+    width = 700 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
+
+var formatNumber = d3.format(",.0f"), 
+    format = function(d) { return formatNumber(d) + " " + units;},
+    color = d3.scale.category20();
+
+var svg = d3.select("#chart").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

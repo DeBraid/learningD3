@@ -30,8 +30,11 @@
       .attr("cy", 200)
       .each("end", function(){
         d3.select(this)
-          .attr("fill", "red")
-          .attr("stroke", "black");
+          .attr("fill", "green")
+          .attr("stroke", "black")
+          .attr("r", 50)
+          .on("mouseover", function(){d3.select(this).style("fill", "aliceblue");})
+          .on("mouseout", function(){d3.select(this).style("fill", "white");});
       });
 
 
