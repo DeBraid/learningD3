@@ -35,6 +35,7 @@ svg.selectAll("rect")
       return "rgb(0, " + (Math.round(d.tuition * 0.01)) + ", 100)";
     });
 
+// add name of Bootcamp on top of respective bars
 svg.selectAll("text")
     .data(dataset)
     .enter()
@@ -48,6 +49,11 @@ svg.selectAll("text")
     .attr("font-family", "sans-serif")
     .attr("font-size", "11px")
     .attr("fill", "black");
+
+// insert axis at bottom
+var xAxis = d3.svg.axis();
+
+xAxis.orient("bottom");
 
 
 

@@ -1,0 +1,205 @@
+<h1>Statistics</h1>
+<div class="row">
+<div id="statsbox1" class="large-12 columns"></div>
+<button type="button" id="toggleToHours">Toggle</button>
+</div>
+<div class="row">
+<div id="statsbox2" class="large-12 columns"></div>
+
+
+<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript" src="/assets/bcshow.js"></script>
+
+
+<script type="text/javascript">
+
+var dataset = <%= raw(@bootcamps.to_json) %>
+
+console.log(dataset);
+
+var width = 500;
+var height = 500;
+var padding = 10;
+
+
+var tooltip = d3.select("#statsbox2")
+  .append("div")
+  .style("position", "absolute")
+  .style("z-index", "10")
+  .style("visibility", "hidden")
+  .text("TOOLTIP TEXT: Should show name of BC");
+  
+var color = function(d) { return "rgb(150, " + (Math.round((d.tuition/d.hours) * 25)) + ", 30)" };    
+
+// var yScale = d3.scale.linear()
+//     .range([height, 0]);
+var xSp = d3.scale.linear()
+          .domain([300, 600]) 
+          .range([ 25, 700 ]);      
+
+var ySp = d3.scale.linear()
+          .domain([500, 20000])
+          .range([ 400, 0 ]);
+
+var svg = d3.select("#statsbox2")
+    .append("svg")
+    .attr("id", "svgScatter")
+    .attr("width", width)
+    .attr("height", height);
+
+
+
+
+svg.selectAll("circle")
+    .data(dataset)
+    .enter()
+    .append("circle")
+    .attr("cx", function(d) { return xSp(d.hours); })
+    .attr("cy", function(d) { return ySp(d.tuition); })
+    .attr("r", function(d) { 
+      return (d.tuition*d.hours*0.000002).toFixed(1); })
+    .attr("data-primary_language", function(d){ return d.primary_language })
+    .attr("opacity", ".5")
+    .attr("fill", color)
+    .text(function(d) { return d.name; })
+    .on("mouseover", function(){
+      return tooltip.style("visibility", "visible"); 
+    })
+    
+
+
+
+
+
+svg.selectAll("circle")
+    .data(dataset)
+    .enter()
+    .append("text")
+    .text(function(d) { return d.name; })
+    .attr("text-anchor", "right")
+    .attr("x", function(d) { 
+      return xSp(d.hours);
+    })
+    .attr("y", function(d) { 
+      return ySp(d.tuition); 
+    });
+
+// draw axes 
+var xAxis = d3.svg.axis()
+      .scale(xSp)
+      .orient("bottom");
+    
+var yAxis = d3.svg.axis()
+      .scale(ySp)
+      .orient("left");
+
+svg.append("g")
+  .attr("class", "axis")
+  .attr("transform", "translate(25, 0)")
+  .call(yAxis);
+
+svg.append("g")
+  .attr("class", "axis")
+  .attr("transform", "translate(0, 345)")
+  .call(xAxis);
+
+
+// axes labels
+
+svg.append("text")
+  .attr("class", "scatlabel")
+  .attr("x", 30)
+  .attr("y", 340)
+  .attr("text-anchor", "right")
+  .text("Total Hours of Study");
+
+
+svg.append("text")
+  .attr("class", "scatlabel")
+  .attr("text-anchor", "end")
+  .attr("y", 30)
+  .attr("dy", "0.75em")
+  .attr("transform", "rotate(-90)")
+  .text("Enrolment Fee");
+
+
+
+</script>
+
+<script>
+
+graphDraw("tuition", 0.01);
+graphDraw("weeks", 10);
+
+// hide the second data set
+  $('svg text').hide();
+  $('.scatlabel').show();
+  $('#statsbox1').children().last().hide();
+
+// on hover of bar show data 
+  $('rect').hover( function() {
+    var id = $(this).attr('id');
+    $('#' + id + '_label').closest('svg text').toggle();
+  });
+
+
+  $('rect').hover( function() {
+    var id = $(this).attr('id');
+    $('#' + id + '_label2').closest('svg text').toggle();
+  });
+
+  $('rect').hover( function() {
+    var id = $(this).attr('id');
+    $('#' + id + '_label3').closest('svg text').toggle();
+  });
+
+
+
+
+// switch between data attributes
+  $("#toggleToHours").click(function() {
+    $('#statsbox1').children().toggle(700);
+  });
+
+
+</script>
+
+
+<style>
+
+svg text {
+  font-family: "American Typewriter", "American Typewriter", "Helvetica Neue";
+  font-size: 18px;
+  font-weight: 100;
+  font-style: 1em;
+  letter-spacing: 1.5px;
+}
+
+#statsbox1, #statsbox2  {
+  width: 550px;
+  height: 375px;
+}
+
+svg {
+  width: 525px;
+  height: 350px;
+}
+
+#tooltip {   
+  text-align: center;           
+  width: 100px;                  
+  height: 60px;                 
+  padding: 2px;             
+  background: #ddd;   
+  border: 0px;      
+  border-radius: 8px;           
+  pointer-events: none;         
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+</style>
